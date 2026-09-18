@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Pawn document formatter for `.sma` and `.inc` through LSP, available through
+  **Format Document**, **Format Selection**, and opt-in format-on-save. Uses
+  editor indentation settings, formats block/control-body indentation and token
+  spacing, and preserves physical line breaks, comments, literals, and
+  preprocessor directives.
 - `// #region <label>` / `// #endregion` folding markers, matched with or
   without the leading `#` (`// region` also works). The bare `#region`
   preprocessor form is **not** used, since `amxxpc` rejects it as an unknown

@@ -2,7 +2,7 @@
     "name": "amxmodx-language",
     "displayName": "AmxModX Language",
     "description": "%extension.description%",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "publisher": "MrCatOff",
     "license": "GPL-3.0",
     "icon": "images/extension-logo.png",
@@ -35,6 +35,7 @@
     "categories": [
         "Programming Languages",
         "Linters",
+        "Formatters",
         "Snippets"
     ],
     "activationEvents": [

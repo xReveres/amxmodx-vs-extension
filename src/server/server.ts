@@ -20,6 +20,7 @@ import { provideDefinition } from './features/definition.js';
 import { buildIncludeLinks } from './features/document-links.js';
 import { provideDocumentSymbols } from './features/document-symbols.js';
 import { provideFoldingRanges } from './features/folding.js';
+import { provideDocumentFormatting } from './features/formatting.js';
 import { provideHover } from './features/hover.js';
 import { provideSignatureHelp } from './features/signature.js';
 import { DIAGNOSTIC_SOURCE, parse } from './parser/parser.js';
@@ -87,6 +88,8 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
             signatureHelpProvider: { triggerCharacters: ['(', ','] },
             documentSymbolProvider: true,
             foldingRangeProvider: true,
+            documentFormattingProvider: true,
+            documentRangeFormattingProvider: true,
             completionProvider: {
                 resolveProvider: false,
                 triggerCharacters: ['(', ',', '=', '@'],
@@ -202,6 +205,18 @@ connection.onFoldingRanges((params) => {
     const document = documents.get(params.textDocument.uri);
     if (!document) return [];
     return provideFoldingRanges(document.getText());
+});
+
+connection.onDocumentFormatting((params) => {
+    const document = documents.get(params.textDocument.uri);
+    if (!document) return [];
+    return provideDocumentFormatting(document.getText(), params.options);
+});
+
+connection.onDocumentRangeFormatting((params) => {
+    const document = documents.get(params.textDocument.uri);
+    if (!document) return [];
+    return provideDocumentFormatting(document.getText(), params.options, params.range);
 });
 
 connection.onCompletion((params) => {
