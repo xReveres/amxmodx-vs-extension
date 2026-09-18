@@ -8,6 +8,7 @@ Built on the Language Server Protocol, ships a bundled TypeScript client + serve
 
 - **Fluent editing** — completion with parameter tab-stops, signature help, hover documentation, symbol outline, go-to-definition on both identifiers and `#include` targets.
 - **Live diagnostics** — a custom Pawn parser flags unmatched braces, malformed `#include`s, unresolved include paths, illegal specifier combinations, and more, as you type.
+- **Document formatting** — block and control-body indentation, operator spacing, and argument spacing for `.sma` and `.inc`, using the editor's tab or space settings.
 - **amxxpc integration** — compile the current file with one command, with output routed to a dedicated channel and warnings/errors surfaced in the Problems panel.
 - **node-amxxpack aware** — auto-detects `.amxxpack.json` at the workspace root and merges its `input.include` / `include[]` entries into the include-resolution path.
 - **Path variables** — `${workspaceFolder}`, `${env:VarName}`, and the rest are expanded in include paths, compiler paths, and output paths.
@@ -36,6 +37,33 @@ For workspaces built with [node-amxxpack](https://github.com/hedgefog/node-amxxp
 | `amxmodx.compileLocal` | AmxModX: Compile plugin (local amxxpc) | Same, but uses an `amxxpc` binary sitting next to the source file. Useful for portable AMX Mod X distributions. |
 
 ## Settings
+
+### Formatting
+
+Run **Format Document** with a `.sma` or `.inc` file in **AmxModX** language mode.
+To select this extension as the formatter and optionally format on save, add:
+
+```json
+"[amxmodx]": {
+    "editor.defaultFormatter": "MrCatOff.amxmodx-language",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+}
+```
+
+The first version keeps existing line breaks, blank lines, brace placement,
+semicolons, line endings, and literal/comment contents. Preprocessor directives
+and their continuation lines are preserved. Lines containing multiline comments,
+multiline strings, or explicit continuations are also preserved verbatim.
+
+Formatting does not expand macros or evaluate conditional compilation. Uncertain
+or incomplete structure retains its existing indentation; incomplete strings or
+comments and unsupported `#pragma ctrlchar` settings leave the document unchanged.
+Spacing around tag/label/ternary colons is preserved. Range formatting, automatic
+line wrapping, and configurable brace styles are not included yet.
+
+### Extension settings
 
 All settings live under the `amxmodx.*` namespace.
 
